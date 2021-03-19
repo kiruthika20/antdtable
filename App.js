@@ -1,0 +1,214 @@
+import React,{useState,Fragment,useEffect,useRef} from "react";
+import 'antd/dist/antd.css';
+import { Form, Input, Button,Modal,Table,Space} from 'antd';
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { get } from "lodash";
+
+ export default function App(){
+
+ const[form]=Form.useForm();
+
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  
+const[values,setValues]=useState([]);
+const [count, setcount] = useState(0);
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+ 
+
+
+
+const handleAddFormOnFinish = (data) => {
+const increment =count+1
+setValues([
+    ...values,
+    { 
+       ...data,id:increment, 
+    },
+]);
+setcount(increment);
+form.resetFields();
+setIsModalVisible(false);
+console.log([...values,
+    { 
+      ...data,id:increment,
+    },
+]);
+};
+
+
+// const edit=(values)=>{
+// const updateValue = {
+//       id: setValues.id,
+//       ...values,
+      
+//     };editUserAddress({ ...updateValue })
+//     setIsModalVisible(true);
+    
+    
+// }
+const edit = () => {
+  const increment =count+1
+  setValues({
+      ...values,
+      
+      
+  });
+  setcount(increment);
+  
+  setIsModalVisible(true);
+  console.log([...values,
+     
+  ]);
+  };
+  
+const removeRow = (id) => {
+  
+  const del = values.filter(person => id !== person.id)
+  setValues(del)
+
+}
+
+const columns = [
+  {
+    title: 'SLNo',
+    dataIndex: 'slno',
+    key: 'slno',
+  },
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+    },
+    
+      {
+        title: 'Age',
+        dataIndex: 'age',
+        key: 'age',
+      },
+      {
+        title: 'Address',
+        dataIndex: 'address',
+        key: 'address',
+      },
+      {
+        title: 'Action',
+        
+        key:'action',
+        render: (text,record) => (
+          <span>
+         
+              <Space>
+                <EditOutlined 
+                // key=id
+                // onClick={(e,currentAction)=>setRecord(record,index,currentAction)}
+                 onClick={edit}
+                 height={14} width={20} />
+                <DeleteOutlined
+                  
+                  onClick={() => removeRow(record.id)}
+                  height={14}
+                  width={20}
+                />
+              </Space>
+            
+          </span>
+        ),
+     
+      }];
+      
+return(
+  <div>
+      <Button className="Add"  type="" onClick={showModal}>
+        ADD
+      </Button>
+ <Table columns={columns} dataSource={values}/>
+  <Modal
+  visible={isModalVisible}
+  footer={null}>
+  
+ <Form
+    form={form}
+    onFinish={handleAddFormOnFinish}
+    // index={recordIndex} record={record}
+    name="basic"
+    labelCol={{ span: 8 }} wrapperCol={{ span: 16 }}>
+    <Form.Item
+        label="slno"
+        // autoFocus defaultValue={values.name} 
+        name="slno"
+        rules={[
+          {
+            required: true,
+            message: 'Please input your sl.no!',
+          },
+        ]}
+       >
+      <Input placeholder="your sl.no.." />
+      </Form.Item>
+    <Form.Item
+        label="Name"
+        // autoFocus  defaultValue={values.name}
+        name="name"
+        rules={[
+          {
+            required: true,
+            message: 'Please input your name!',
+          },
+        ]}
+       >
+      <Input placeholder="your name.."  />
+      </Form.Item>
+
+      <Form.Item
+        label="Age"
+        // autoFocus  defaultValue={values.name}
+        name='age'
+       rules={[
+          {
+            required: true,
+            message: 'Please input your age!' ,
+          },
+        ]}
+      >
+        <Input placeholder="your age.." />
+      </Form.Item>
+      <Form.Item
+      id="3"
+        label="Address"
+        name="address"
+       rules={[
+          {
+            required: true,
+            message: 'Please input your address!',
+          },
+        ]}
+      >
+      <Input  placeholder="your address.." />
+      </Form.Item>
+      <Form.Item>
+      <Fragment>
+      <Space>
+       <button type="submit" >
+        submit
+      </button>
+      <button type="submit"onClick={()=>{setIsModalVisible(false);}}>
+       cancel
+      </button>
+      
+      </Space>
+      </Fragment>
+      </Form.Item>
+      
+    </Form>
+
+  </Modal>
+
+
+
+  </div>
+)
+}
