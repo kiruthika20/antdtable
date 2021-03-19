@@ -2,7 +2,7 @@ import React,{useState,Fragment,useEffect,useRef} from "react";
 import 'antd/dist/antd.css';
 import { Form, Input, Button,Modal,Table,Space} from 'antd';
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
-import { get } from "lodash";
+
 
  export default function App(){
 
@@ -40,30 +40,6 @@ console.log([...values,
 };
 
 
-// const edit=(values)=>{
-// const updateValue = {
-//       id: setValues.id,
-//       ...values,
-      
-//     };editUserAddress({ ...updateValue })
-//     setIsModalVisible(true);
-    
-    
-// }
-const edit = () => {
-  const increment =count+1
-  setValues({
-      ...values,
-      
-      
-  });
-  setcount(increment);
-  
-  setIsModalVisible(true);
-  console.log([...values,
-     
-  ]);
-  };
   
 const removeRow = (id) => {
   
@@ -103,9 +79,7 @@ const columns = [
          
               <Space>
                 <EditOutlined 
-                // key=id
-                // onClick={(e,currentAction)=>setRecord(record,index,currentAction)}
-                 onClick={edit}
+                
                  height={14} width={20} />
                 <DeleteOutlined
                   
@@ -133,12 +107,12 @@ return(
  <Form
     form={form}
     onFinish={handleAddFormOnFinish}
-    // index={recordIndex} record={record}
+  
     name="basic"
     labelCol={{ span: 8 }} wrapperCol={{ span: 16 }}>
     <Form.Item
         label="slno"
-        // autoFocus defaultValue={values.name} 
+         
         name="slno"
         rules={[
           {
@@ -151,7 +125,7 @@ return(
       </Form.Item>
     <Form.Item
         label="Name"
-        // autoFocus  defaultValue={values.name}
+        
         name="name"
         rules={[
           {
@@ -165,7 +139,7 @@ return(
 
       <Form.Item
         label="Age"
-        // autoFocus  defaultValue={values.name}
+        
         name='age'
        rules={[
           {
